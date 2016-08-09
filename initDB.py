@@ -3,7 +3,7 @@ import sqlite3
 
 class Database:
     def __init__(self):
-        self.conn = sqlite3.connect('test.db')
+        self.con = sqlite3.connect('test.db')
         self.createTable()
 
     def checkRegistration(self, Topic):
@@ -37,16 +37,16 @@ class Database:
                    Topic            TEXT     NOT NULL);''');
         except Exception, err:
             print err;
-            self.conn.commit()
+            self.con.commit()
 
 
     def insertRegistration(self,Server,Topic):
-        if(not self.checkRegistration(self.con,Topic)):
+        if(not self.checkRegistration(Topic)):
             cur = self.con.cursor()
             cur.execute("insert into Service (Server,Topic) values (?, ?)", (Server, Topic))
             self.con.commit()
         else:
-            self.updateRegistration(self.con,Server,Topic)
+            self.updateRegistration(Server,Topic)
 
 
     def closeconnection(self):
